@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Healthy Habit Tracker</title>
+    <meta
+      name="description"
+      content="A 4-week tracker for stacking healthy eating habits, starting October 10, 2026."
+    />
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,560;9..144,640&family=Outfit:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="top">
+      <div class="top-copy">
+        <p class="eyebrow">October 10 – November 6, 2026</p>
+        <h1>Four-week habit plan</h1>
+        <p class="lede">
+          Add one habit each week, and keep practicing the ones you already started.
+          Aim for 5 successful days out of 7 for every habit.
+        </p>
+      </div>
+      <div class="top-actions">
+        <p id="plan-status" class="status">Loading plan…</p>
+        <button type="button" id="reset-btn" class="btn-ghost">Reset progress</button>
+      </div>
+    </header>
+
+    <section class="summary" aria-labelledby="summary-title">
+      <h2 id="summary-title" class="visually-hidden">Overall progress</h2>
+      <div class="summary-stats">
+        <p>
+          <span class="stat-value" id="checked-count">0</span>
+          <span class="stat-label">of <span id="total-slots">0</span> checkmarks</span>
+        </p>
+        <p>
+          <span class="stat-value" id="complete-days">0</span>
+          <span class="stat-label">of 28 days fully done</span>
+        </p>
+      </div>
+      <div
+        class="meter"
+        role="progressbar"
+        id="overall-meter"
+        aria-valuemin="0"
+        aria-valuemax="70"
+        aria-valuenow="0"
+        aria-label="Overall habits checked"
+      >
+        <div class="meter-fill" id="overall-fill"></div>
+      </div>
+    </section>
+
+    <main id="weeks"></main>
+
+    <footer class="foot">
+      <p>Progress stays in this browser. Closing the tab will not erase it.</p>
+    </footer>
+
+    <dialog id="reset-dialog" aria-labelledby="reset-title">
+      <h2 id="reset-title">Reset progress?</h2>
+      <p>This clears every checkmark on this device. You can’t undo it.</p>
+      <form method="dialog" class="dialog-actions">
+        <button value="cancel" class="btn-ghost">Cancel</button>
+        <button value="reset" class="btn-danger">Reset progress</button>
+      </form>
+    </dialog>
+
+    <noscript>
+      <p class="noscript">Turn on JavaScript to use the habit tracker.</p>
+    </noscript>
+    <script src="app.js"></script>
+  </body>
+</html>
