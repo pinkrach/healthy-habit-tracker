@@ -2,77 +2,130 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="Habits" />
+    <meta name="theme-color" content="#F3F8F4" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0E1612" media="(prefers-color-scheme: dark)" />
     <title>Healthy Habit Tracker</title>
     <meta
       name="description"
       content="A 4-week tracker for stacking healthy eating habits, starting October 10, 2026."
     />
     <link rel="icon" href="favicon.svg" type="image/svg+xml" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,560;9..144,640&family=Outfit:wght@400;500;600&display=swap"
-      rel="stylesheet"
-    />
+    <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+    <link rel="manifest" href="manifest.webmanifest" />
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <header class="top">
-      <div class="top-copy">
-        <p class="eyebrow">October 10 – November 6, 2026</p>
-        <h1>Four-week habit plan</h1>
-        <p class="lede">
-          Add one habit each week, and keep practicing the ones you already started.
-          Aim for 5 successful days out of 7 for every habit.
-        </p>
-      </div>
-      <div class="top-actions">
-        <p id="plan-status" class="status">Loading plan…</p>
-        <button type="button" id="reset-btn" class="btn-ghost">Reset progress</button>
-      </div>
-    </header>
+    <div class="app">
+      <div class="screens">
+        <section class="screen is-active" id="screen-home" aria-labelledby="home-title">
+          <header class="screen-head">
+            <h1 id="home-title">Saturday</h1>
+            <p id="home-date">October 10</p>
+            <p id="home-status">Starts in 3 days</p>
+          </header>
 
-    <section class="summary" aria-labelledby="summary-title">
-      <h2 id="summary-title" class="visually-hidden">Overall progress</h2>
-      <div class="summary-stats">
-        <p>
-          <span class="stat-value" id="checked-count">0</span>
-          <span class="stat-label">of <span id="total-slots">0</span> checkmarks</span>
-        </p>
-        <p>
-          <span class="stat-value" id="complete-days">0</span>
-          <span class="stat-label">of 28 days fully done</span>
-        </p>
-      </div>
-      <div
-        class="meter"
-        role="progressbar"
-        id="overall-meter"
-        aria-valuemin="0"
-        aria-valuemax="70"
-        aria-valuenow="0"
-        aria-label="Overall habits checked"
-      >
-        <div class="meter-fill" id="overall-fill"></div>
-      </div>
-    </section>
+          <section class="card streak" aria-labelledby="streak-label">
+            <div class="streak-main">
+              <p class="streak-count" id="streak-count">0</p>
+              <p class="streak-label" id="streak-label">day streak</p>
+            </div>
+            <div class="streak-days">
+              <p><span id="days-passed">0</span> passed</p>
+              <p><span id="days-left">28</span> left</p>
+            </div>
+            <p class="footnote" id="streak-note"></p>
+          </section>
 
-    <main id="weeks"></main>
+          <section class="card" aria-labelledby="home-habits-title">
+            <div class="card-head">
+              <h2 id="home-habits-title">Today</h2>
+              <p id="home-score">0 of 1</p>
+            </div>
+            <div id="home-habits"></div>
+            <label class="note">
+              <span>Note</span>
+              <textarea id="home-note" rows="2" maxlength="240" placeholder="Add a note for this day"></textarea>
+            </label>
+          </section>
 
-    <footer class="foot">
-      <p>Progress stays in this browser. Closing the tab will not erase it.</p>
-    </footer>
+          <button type="button" id="reset-btn" class="text-btn">Reset progress</button>
+        </section>
+
+        <section class="screen" id="screen-calendar" aria-labelledby="calendar-title" hidden>
+          <header class="screen-head calendar-head">
+            <button type="button" id="prev-month" class="chevron" aria-label="Previous month">
+              <svg viewBox="0 0 12 20" aria-hidden="true"><path d="M10 2 2 10l8 8" /></svg>
+            </button>
+            <div>
+              <h1 id="calendar-title">October</h1>
+              <p id="calendar-year">2026</p>
+            </div>
+            <button type="button" id="next-month" class="chevron" aria-label="Next month">
+              <svg viewBox="0 0 12 20" aria-hidden="true"><path d="M2 2 10 10l-8 8" /></svg>
+            </button>
+          </header>
+
+          <section class="card calendar-card">
+            <div class="weekday-row" aria-hidden="true">
+              <span>S</span><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span>
+            </div>
+            <div id="calendar-grid" class="calendar-grid" role="grid" aria-label="Plan calendar"></div>
+            <p class="footnote legend"><span class="legend-dot"></span> Green marks a finished day</p>
+          </section>
+
+          <section class="card" id="calendar-day" hidden>
+            <div class="card-head">
+              <h2 id="calendar-day-title">Saturday</h2>
+              <p id="calendar-score">0 of 1</p>
+            </div>
+            <div id="calendar-habits"></div>
+            <label class="note">
+              <span>Note</span>
+              <textarea id="calendar-note" rows="2" maxlength="240" placeholder="Add a note for this day"></textarea>
+            </label>
+          </section>
+        </section>
+
+        <section class="screen" id="screen-goals" aria-labelledby="goals-title" hidden>
+          <header class="screen-head">
+            <h1 id="goals-title">Goals</h1>
+            <p>5 of 7 days for each habit</p>
+          </header>
+          <div id="goal-weeks"></div>
+        </section>
+      </div>
+
+      <nav class="tabbar" aria-label="Sections">
+        <button type="button" class="tab" id="tab-home" data-tab="home" aria-selected="true">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.5 10.8 12 4.5l7.5 6.3V19a1.5 1.5 0 0 1-1.5 1.5H15v-6H9v6H6A1.5 1.5 0 0 1 4.5 19v-8.2z" /></svg>
+          <span>Home</span>
+        </button>
+        <button type="button" class="tab" id="tab-calendar" data-tab="calendar" aria-selected="false">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="5.5" width="16" height="14" rx="2" /><path d="M8 3.5v4M16 3.5v4M4 10h16" /></svg>
+          <span>Calendar</span>
+        </button>
+        <button type="button" class="tab" id="tab-goals" data-tab="goals" aria-selected="false">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="7.5" /><circle cx="12" cy="12" r="3.5" /><circle cx="12" cy="12" r="1" /></svg>
+          <span>Goals</span>
+        </button>
+      </nav>
+    </div>
 
     <dialog id="reset-dialog" aria-labelledby="reset-title">
       <h2 id="reset-title">Reset progress?</h2>
-      <p>This clears every checkmark on this device. You can’t undo it.</p>
+      <p>This clears every checkmark and note on this device. You can’t undo it.</p>
       <form method="dialog" class="dialog-actions">
-        <button value="cancel" class="btn-ghost">Cancel</button>
-        <button value="reset" class="btn-danger">Reset progress</button>
+        <button value="cancel">Cancel</button>
+        <button value="reset">Reset</button>
       </form>
     </dialog>
 
+    <canvas id="confetti" aria-hidden="true"></canvas>
     <noscript>
       <p class="noscript">Turn on JavaScript to use the habit tracker.</p>
     </noscript>
